@@ -3,54 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navegue com Segurança</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Navegue Seguro - Guia Digital para a Terceira Idade</title>
+    <!-- Vinculação do ficheiro CSS externo -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <header class="cabecalho">
-        <h1>Segurança na Internet</h1>
-        <p class="subtitulo">Aprenda a navegar sem medo e evitar golpes</p>
+    <!-- Cabeçalho Principal -->
+    <header>
+        <h1>Navegue Seguro 🛡️</h1>
+        <p>Seu guia de apoio para usar a internet com tranquilidade</p>
     </header>
 
-    <main class="conteudo-principal">
+    <!-- Barra de Ajustes de Acessibilidade -->
+    <div class="accessibility-bar" aria-label="Controles de Acessibilidade">
+        <button class="btn-access" onclick="changeFontSize(2)">A+ Aumentar Letra</button>
+        <button class="btn-access" onclick="changeFontSize(-2)">A- Diminuir Letra</button>
+        <button class="btn-access" onclick="toggleDarkMode()">🌓 Alto Contraste</button>
+    </div>
 
-        <section class="card-dica">
-            <h2>1. Senhas Fortes e Secretas</h2>
-            <p>Nunca use a sua data de nascimento ou a palavra "123456" como senha. Anote suas senhas em um caderno guardado em local seguro na sua casa.</p>
-            <div class="alerta">
-                <strong>Importante:</strong> Ninguém do banco vai pedir a sua senha por telefone ou mensagem.
-            </div>
-        </section>
-
-        <section class="card-dica">
-            <h2>2. Cuidado com Links e Mensagens</h2>
-            <p>Se receber uma mensagem no WhatsApp dizendo que você ganhou um prêmio ou pedindo dinheiro urgente, desconfie!</p>
-            <p>Antes de clicar em qualquer link, pergunte para alguém da sua confiança.</p>
-        </section>
-
-        <section class="card-dica">
-            <h2>3. Como Reconhecer um Site Seguro</h2>
-            <p>Ao fazer compras ou entrar no banco, olhe no topo da tela do navegador:</p>
-            <ul>
-                <li>Procure pelo ícone de um <strong>cadeado fechado</strong> ao lado do endereço.</li>
-                <li>Verifique se o endereço começa com <strong>https://</strong>.</li>
+    <main>
+        <!-- Seção 1: Regras de Ouro -->
+        <section class="card">
+            <h2>🔒 Regras de Ouro da Segurança</h2>
+            <ul class="tips-list">
+                <li><strong>Nunca informe suas senhas:</strong> Nenhum banco ou empresa confiável pede sua senha por mensagem ou telefone.</li>
+                <li><strong>Cuidado com links estranhos:</strong> Não clique em links recebidos de números desconhecidos no WhatsApp ou SMS.</li>
+                <li><strong>Desconfie de ofertas boas demais:</strong> Produtos muito baratos ou prêmios inesperados costumam ser golpes.</li>
+                <li><strong>Na dúvida, peça ajuda:</strong> Sempre consulte um familiar ou amigo de confiança antes de fazer transferências ou pagamentos.</li>
             </ul>
         </section>
 
-        <section class="secao-ajuda">
-            <h2>Precisa de Ajuda Agora?</h2>
-            <p>Se você acha que caiu em um golpe ou está com dúvidas:</p>
-            <button class="botao-emergencia" onclick="alert('Ligue para um familiar de confiança ou para a Ouvidoria do seu banco.')">
-                O que fazer agora?
-            </button>
+        <!-- Seção 2: Teste Prático (Simulador de Golpes) -->
+        <section class="card">
+            <h2>🧠 Teste Interativo: É Golpe ou Seguro?</h2>
+            <p>Leia a mensagem abaixo e escolha a melhor atitude a ser tomada:</p>
+
+            <div class="simulator">
+                <div class="sms-box">
+                    "BANCO CENTRAL: Seu CPF está bloqueado! Evite multas clicando no link para regularizar agora: www.banco-falso123.com"
+                </div>
+
+                <div class="simulator-options">
+                    <button class="btn-option" onclick="checkAnswer(false)">
+                        1. Clicar no link imediatamente para resolver o problema.
+                    </button>
+                    <button class="btn-option" onclick="checkAnswer(true)">
+                        2. Apagar a mensagem e não clicar em nenhum link.
+                    </button>
+                </div>
+
+                <div id="feedback-message" class="feedback" aria-live="polite"></div>
+            </div>
         </section>
 
+        <!-- Seção 3: Botão de Emergência / Apoio -->
+        <section class="card emergency-box">
+            <h2 style="color: var(--danger); justify-content: center;">🚨 Suspeita de Golpe?</h2>
+            <p>Se você digitou dados pessoais ou fez algum pagamento suspeito:</p>
+            <p>1. Ligue imediatamente para o seu banco pelo número impresso no verso do seu cartão.</p>
+            <p>2. Entre em contato com a Polícia Civil (Disque 190) ou vá até uma delegacia.</p>
+        </section>
     </main>
 
-    <footer class="rodape">
-        <p>Desenvolvido para sua proteção e tranquilidade online.</p>
-    </footer>
+    <!-- JavaScript Integrado para Funcionalidades -->
+    <script>
+        // Função para alterar tamanho da fonte
+        let currentFontSize = 20;
+        function changeFontSize(step) {
+            currentFontSize += step;
+            if (currentFontSize < 16) currentFontSize = 16;
+            if (currentFontSize > 28) currentFontSize = 28;
+            document.documentElement.style.setProperty('--font-size-base', currentFontSize + 'px');
+        }
 
+        // Função para alternar modo escuro (Alto Contraste)
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // Função para verificar resposta do simulador
+        function checkAnswer(isCorrect) {
+            const feedbackEl = document.getElementById('feedback-message');
+            
+            if (isCorrect) {
+                feedbackEl.className = 'feedback correct';
+                feedbackEl.innerHTML = '✨ Parabéns! Você acertou. Bancos e órgãos oficiais nunca enviam links desse tipo por SMS. Apagar a mensagem é a atitude correta!';
+            } else {
+                feedbackEl.className = 'feedback incorrect';
+                feedbackEl.innerHTML = '⚠️ Atenção! Isso é um golpe. Nunca clique em links recebidos por mensagem de texto, pois eles podem roubar seus dados.';
+            }
+        }
+    </script>
 </body>
 </html>
