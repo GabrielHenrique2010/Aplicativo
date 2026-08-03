@@ -1,99 +1,247 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navegue Seguro - Guia Digital para a Terceira Idade</title>
-    <!-- Vinculação do ficheiro CSS externo -->
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navegue Seguro - Assistente Anti-Burlas para Idosos</title>
+  
+  <!-- Estilos Externos -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Ficheiro CSS Personalizado -->
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="font-size-md min-h-screen flex flex-col">
 
-    <!-- Cabeçalho Principal -->
-    <header>
-        <h1>Navegue Seguro 🛡️</h1>
-        <p>Seu guia de apoio para usar a internet com tranquilidade</p>
-    </header>
+  <!-- BARRA DE ACESSIBILIDADE E VOZ -->
+  <header class="bg-slate-900 text-white p-3 sticky top-0 z-50 shadow-md">
+    <div class="max-w-4xl mx-auto flex flex-wrap justify-between items-center gap-2">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-shield-halved text-yellow-400 text-2xl"></i>
+        <span class="font-bold text-lg tracking-wide">NAVEGUE SEGURO</span>
+      </div>
 
-    <!-- Barra de Ajustes de Acessibilidade -->
-    <div class="accessibility-bar" aria-label="Controles de Acessibilidade">
-        <button class="btn-access" onclick="changeFontSize(2)">A+ Aumentar Letra</button>
-        <button class="btn-access" onclick="changeFontSize(-2)">A- Diminuir Letra</button>
-        <button class="btn-access" onclick="toggleDarkMode()">🌓 Alto Contraste</button>
+      <!-- Controlo de Tamanho do Texto -->
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-gray-300 font-semibold mr-1">Tamanho da Letra:</span>
+        <button onclick="mudarTamanhoFonte('sm')" class="bg-slate-700 hover:bg-slate-600 px-3 py-1 rounded text-sm font-bold" title="Texto Normal">A-</button>
+        <button onclick="mudarTamanhoFonte('md')" class="bg-slate-700 hover:bg-slate-600 px-3 py-1 rounded text-base font-bold border-2 border-yellow-400" title="Texto Grande">A</button>
+        <button onclick="mudarTamanhoFonte('lg')" class="bg-slate-700 hover:bg-slate-600 px-3 py-1 rounded text-xl font-bold" title="Texto Muito Grande">A+</button>
+      </div>
     </div>
+  </header>
 
-    <main>
-        <!-- Seção 1: Regras de Ouro -->
-        <section class="card">
-            <h2>🔒 Regras de Ouro da Segurança</h2>
-            <ul class="tips-list">
-                <li><strong>Nunca informe suas senhas:</strong> Nenhum banco ou empresa confiável pede sua senha por mensagem ou telefone.</li>
-                <li><strong>Cuidado com links estranhos:</strong> Não clique em links recebidos de números desconhecidos no WhatsApp ou SMS.</li>
-                <li><strong>Desconfie de ofertas boas demais:</strong> Produtos muito baratos ou prêmios inesperados costumam ser golpes.</li>
-                <li><strong>Na dúvida, peça ajuda:</strong> Sempre consulte um familiar ou amigo de confiança antes de fazer transferências ou pagamentos.</li>
-            </ul>
-        </section>
+  <!-- BANNER PRINCIPAL COM ASSISTENTE -->
+  <section class="bg-blue-800 text-white py-6 px-4">
+    <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-4">
+        <div class="bg-blue-600 p-4 rounded-full border-4 border-white text-3xl shadow-inner">
+          👴👵
+        </div>
+        <div>
+          <h1 class="text-2xl md:text-3xl font-extrabold">Olá! Sou o seu Guia Digital</h1>
+          <p class="text-blue-100 text-base">Estou aqui para o ajudar a usar a Internet com tranquilidade e sem medo de burlas.</p>
+        </div>
+      </div>
+      
+      <button onclick="falarTexto('Olá! Bem-vindo ao Navegue Seguro. Escolha uma das opções abaixo para verificar mensagens suspeitas, fazer testes ou aprender dicas de segurança.')" 
+              class="bg-yellow-400 hover:bg-yellow-300 text-slate-900 btn-senior w-full md:w-auto font-bold border-2 border-yellow-500">
+        <i class="fa-solid fa-volume-high text-xl"></i> Ouvir Boas-Vindas
+      </button>
+    </div>
+  </section>
 
-        <!-- Seção 2: Teste Prático (Simulador de Golpes) -->
-        <section class="card">
-            <h2>🧠 Teste Interativo: É Golpe ou Seguro?</h2>
-            <p>Leia a mensagem abaixo e escolha a melhor atitude a ser tomada:</p>
+  <!-- MENU PRINCIPAL DE NAVEGAÇÃO -->
+  <nav class="max-w-4xl mx-auto w-full px-4 -mt-4 z-10">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 bg-white p-2 rounded-2xl shadow-lg border-2 border-slate-200">
+      <button onclick="mudarAba('verificador')" id="tab-verificador" class="btn-tab btn-senior bg-blue-600 text-white flex-col py-3">
+        <i class="fa-solid fa-magnifying-glass text-2xl"></i>
+        <span>Analisar Mensagem</span>
+      </button>
 
-            <div class="simulator">
-                <div class="sms-box">
-                    "BANCO CENTRAL: Seu CPF está bloqueado! Evite multas clicando no link para regularizar agora: www.banco-falso123.com"
-                </div>
+      <button onclick="mudarAba('guias')" id="tab-guias" class="btn-tab btn-senior bg-slate-100 text-slate-800 hover:bg-slate-200 flex-col py-3">
+        <i class="fa-solid fa-book-open text-2xl text-blue-600"></i>
+        <span>Dicas Rápidas</span>
+      </button>
 
-                <div class="simulator-options">
-                    <button class="btn-option" onclick="checkAnswer(false)">
-                        1. Clicar no link imediatamente para resolver o problema.
-                    </button>
-                    <button class="btn-option" onclick="checkAnswer(true)">
-                        2. Apagar a mensagem e não clicar em nenhum link.
-                    </button>
-                </div>
+      <button onclick="mudarAba('quiz')" id="tab-quiz" class="btn-tab btn-senior bg-slate-100 text-slate-800 hover:bg-slate-200 flex-col py-3">
+        <i class="fa-solid fa-circle-question text-2xl text-green-600"></i>
+        <span>Jogo do Teste</span>
+      </button>
 
-                <div id="feedback-message" class="feedback" aria-live="polite"></div>
+      <button onclick="mudarAba('emergencia')" id="tab-emergencia" class="btn-tab btn-senior bg-slate-100 text-slate-800 hover:bg-slate-200 flex-col py-3">
+        <i class="fa-solid fa-phone-flip text-2xl text-red-600"></i>
+        <span>Socorro / Emergência</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="max-w-4xl mx-auto w-full p-4 flex-1">
+
+    <!-- SECÇÃO 1: VERIFICADOR DE BURLAS -->
+    <section id="sec-verificador" class="space-y-6">
+      <div class="card-senior border-l-8 border-l-blue-600">
+        <div class="flex justify-between items-start mb-3">
+          <h2 class="text-2xl font-bold text-slate-800">
+            <i class="fa-solid fa-shield-virus text-blue-600 mr-2"></i>
+            Verificar Mensagem, SMS ou Ligação Suspeita
+          </h2>
+          <button onclick="falarTexto('Cole aqui qualquer texto, mensagem do WhatsApp, e-mail ou SMS que tenha recebido e ache suspeito. Depois clique em Verificar se é Perigoso.')" class="text-blue-600 p-2 rounded-full hover:bg-blue-50" title="Ouvir instrução">
+            <i class="fa-solid fa-volume-high text-xl"></i>
+          </button>
+        </div>
+        <p class="text-gray-600 mb-4">
+          Recebeu alguma mensagem estranha no WhatsApp, SMS do banco ou pedido urgente de transferência? Cole abaixo para testar!
+        </p>
+
+        <!-- Campo de Texto -->
+        <div class="space-y-3">
+          <label for="texto-mensagem" class="block font-bold text-slate-700">Cole a mensagem que recebeu aqui:</label>
+          <textarea id="texto-mensagem" rows="4" 
+            class="w-full p-4 text-slate-800 border-2 border-slate-300 rounded-xl focus:border-blue-600 text-lg" 
+            placeholder="Exemplo: Olá mãe, mudei de número. Preciso que me faças uma transferência urgente para pagar uma conta..."></textarea>
+          
+          <!-- Botões de Exemplo -->
+          <div class="flex flex-wrap gap-2 items-center">
+            <span class="text-xs font-bold text-gray-500 uppercase">Ou teste um destes exemplos:</span>
+            <button onclick="usarExemplo(1)" class="text-xs bg-slate-200 hover:bg-slate-300 px-3 py-1.5 rounded-lg font-semibold text-slate-700">
+              📌 Pedido de Dinheiro do "Filho"
+            </button>
+            <button onclick="usarExemplo(2)" class="text-xs bg-slate-200 hover:bg-slate-300 px-3 py-1.5 rounded-lg font-semibold text-slate-700">
+              📌 Banco a avisar de Bloqueio
+            </button>
+            <button onclick="usarExemplo(3)" class="text-xs bg-slate-200 hover:bg-slate-300 px-3 py-1.5 rounded-lg font-semibold text-slate-700">
+              📌 Ganhou Prémio / Sorteio
+            </button>
+          </div>
+
+          <!-- Botões de Ação -->
+          <div class="flex flex-col sm:flex-row gap-3 pt-2">
+            <button onclick="analisarMensagem()" id="btn-analisar" class="btn-senior bg-blue-600 hover:bg-blue-700 text-white flex-1 text-lg">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <span>Verificar se é Perigoso</span>
+            </button>
+            <button onclick="limparVerificador()" class="btn-senior bg-slate-200 hover:bg-slate-300 text-slate-700">
+              <i class="fa-solid fa-eraser"></i> Limpar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ÁREA DE RESULTADO DA ANÁLISE -->
+      <div id="resultado-container" class="hidden card-senior transition-all duration-300">
+        <!-- Inserido via JS -->
+      </div>
+    </section>
+
+    <!-- SECÇÃO 2: DICAS RÁPIDAS -->
+    <section id="sec-guias" class="hidden space-y-6">
+      <div class="card-senior">
+        <h2 class="text-2xl font-bold text-slate-800 mb-2">
+          <i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i>
+          Regras de Ouro de Segurança na Internet
+        </h2>
+        <p class="text-gray-600 mb-6">Guarde estas regras simples no seu dia a dia para se proteger sempre.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <div class="p-4 rounded-xl border-2 border-red-200 bg-red-50 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-2">
+                <span class="bg-red-600 text-white text-xl font-black w-10 h-10 rounded-full flex items-center justify-center">1</span>
+                <h3 class="text-xl font-bold text-red-900">Nunca Envie Dinheiro com Apressadamente</h3>
+              </div>
+              <p class="text-slate-700 text-base">
+                Se algum amigo ou familiar pedir dinheiro por mensagem, <strong>LIGUE para o número antigo dele</strong> antes de enviar qualquer quantia.
+              </p>
             </div>
-        </section>
+            <button onclick="falarTexto('Regra número 1: Nunca envie dinheiro apressadamente. Ligue sempre para o número antigo do seu familiar para confirmar.')" class="mt-4 text-red-700 hover:text-red-900 font-bold text-sm flex items-center gap-2">
+              <i class="fa-solid fa-volume-high text-lg"></i> Ouvir esta dica
+            </button>
+          </div>
 
-        <!-- Seção 3: Botão de Emergência / Apoio -->
-        <section class="card emergency-box">
-            <h2 style="color: var(--danger); justify-content: center;">🚨 Suspeita de Golpe?</h2>
-            <p>Se você digitou dados pessoais ou fez algum pagamento suspeito:</p>
-            <p>1. Ligue imediatamente para o seu banco pelo número impresso no verso do seu cartão.</p>
-            <p>2. Entre em contato com a Polícia Civil (Disque 190) ou vá até uma delegacia.</p>
-        </section>
-    </main>
+          <div class="p-4 rounded-xl border-2 border-amber-200 bg-amber-50 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-2">
+                <span class="bg-amber-600 text-white text-xl font-black w-10 h-10 rounded-full flex items-center justify-center">2</span>
+                <h3 class="text-xl font-bold text-amber-900">O Banco Não Pede Senhas por Telefone</h3>
+              </div>
+              <p class="text-slate-700 text-base">
+                Nenhum banco telefona a pedir o PIN do cartão, códigos de segurança ou a solicitar transferências para cancelar fraudes. É BURLA!
+              </p>
+            </div>
+            <button onclick="falarTexto('Regra número 2: O banco não pede senhas por telefone. Nenhum banco telefona a pedir códigos ou o seu PIN.')" class="mt-4 text-amber-700 hover:text-amber-900 font-bold text-sm flex items-center gap-2">
+              <i class="fa-solid fa-volume-high text-lg"></i> Ouvir esta dica
+            </button>
+          </div>
 
-    <!-- JavaScript Integrado para Funcionalidades -->
-    <script>
-        // Função para alterar tamanho da fonte
-        let currentFontSize = 20;
-        function changeFontSize(step) {
-            currentFontSize += step;
-            if (currentFontSize < 16) currentFontSize = 16;
-            if (currentFontSize > 28) currentFontSize = 28;
-            document.documentElement.style.setProperty('--font-size-base', currentFontSize + 'px');
-        }
+        </div>
+      </div>
+    </section>
 
-        // Função para alternar modo escuro (Alto Contraste)
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-        }
+    <!-- SECÇÃO 3: QUIZ INTERATIVO -->
+    <section id="sec-quiz" class="hidden space-y-6">
+      <div class="card-senior">
+        <div class="flex justify-between items-center mb-4">
+          <div>
+            <h2 class="text-2xl font-bold text-slate-800">
+              <i class="fa-solid fa-graduation-cap text-green-600 mr-2"></i>
+              Treino Anti-Burla
+            </h2>
+            <p class="text-gray-600 text-sm">Responda às situações abaixo para testar os seus conhecimentos!</p>
+          </div>
+          <span id="quiz-placar" class="bg-green-100 text-green-800 font-bold px-4 py-2 rounded-xl text-lg border-2 border-green-300">
+            Pontos: 0
+          </span>
+        </div>
 
-        // Função para verificar resposta do simulador
-        function checkAnswer(isCorrect) {
-            const feedbackEl = document.getElementById('feedback-message');
-            
-            if (isCorrect) {
-                feedbackEl.className = 'feedback correct';
-                feedbackEl.innerHTML = '✨ Parabéns! Você acertou. Bancos e órgãos oficiais nunca enviam links desse tipo por SMS. Apagar a mensagem é a atitude correta!';
-            } else {
-                feedbackEl.className = 'feedback incorrect';
-                feedbackEl.innerHTML = '⚠️ Atenção! Isso é um golpe. Nunca clique em links recebidos por mensagem de texto, pois eles podem roubar seus dados.';
-            }
-        }
-    </script>
+        <div id="quiz-card" class="bg-slate-50 p-6 rounded-xl border-2 border-slate-200 space-y-4">
+          <h3 id="quiz-pergunta" class="text-xl font-bold text-slate-800">Carregando pergunta...</h3>
+          <div id="quiz-opcoes" class="space-y-3 pt-2"></div>
+          <div id="quiz-feedback" class="hidden p-4 rounded-xl text-lg font-bold"></div>
+          <button onclick="proximaPergunta()" id="btn-proxima-pergunta" class="hidden btn-senior bg-blue-600 hover:bg-blue-700 text-white w-full text-lg mt-4">
+            Avançar para a Próxima Pergunta <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECÇÃO 4: EMERGÊNCIA -->
+    <section id="sec-emergencia" class="hidden space-y-6">
+      <div class="card-senior border-l-8 border-l-red-600">
+        <h2 class="text-2xl font-bold text-red-600 mb-2">
+          <i class="fa-solid fa-triangle-exclamation mr-2"></i>
+          Acho que caí numa burla ou fiz uma transferência! O que fazer?
+        </h2>
+        <div class="space-y-4 mt-4">
+          <div class="flex gap-4 items-start p-4 bg-red-50 border-2 border-red-200 rounded-xl">
+            <span class="bg-red-600 text-white text-2xl font-black w-10 h-10 rounded-full flex items-center justify-center shrink-0">1</span>
+            <div>
+              <h3 class="text-xl font-bold text-slate-900">Contacte IMEDIATAMENTE o seu Banco</h3>
+              <p class="text-slate-700">Ligue para a linha de apoio indicada no verso do seu cartão bancário e peça para cancelar operações recentes.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 items-start p-4 bg-orange-50 border-2 border-orange-200 rounded-xl">
+            <span class="bg-orange-600 text-white text-2xl font-black w-10 h-10 rounded-full flex items-center justify-center shrink-0">2</span>
+            <div>
+              <h3 class="text-xl font-bold text-slate-900">Apresente Queixa às Autoridades</h3>
+              <p class="text-slate-700">Dirija-se ao posto da Polícia (GNR ou PSP) mais próximo para registar a ocorrência.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer class="bg-slate-900 text-slate-400 py-6 px-4 text-center mt-auto border-t-4 border-blue-600">
+    <p class="font-bold text-white text-lg">Navegue Seguro - Tecnologia Acessível</p>
+  </footer>
+
+  <!-- Ficheiro JavaScript Personalizado -->
+  <script src="script.js"></script>
 </body>
 </html>
