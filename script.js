@@ -1,4 +1,4 @@
-// Chave de API do ambiente 
+// Chave de API do ambiente Gemini
 const apiKey = "";
 
 // -------------------------------------------------------------
